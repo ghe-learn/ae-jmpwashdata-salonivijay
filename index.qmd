@@ -1,6 +1,11 @@
 ---
 title: "Hello, Quarto"
-format: html
+format: revealjs
+execute: 
+  echo: false
+  message: false
+  warning: false
+bibliography: references.bib
 ---
 
 # R Package jmpwashdata
@@ -25,6 +30,12 @@ We will also use the World Bank income classification for 218 countries. This da
 
 income_groups_df <- read_rds("data/wb-income-groups.rds")
 
+```
+
+```{r}
+income_groups_df %>% 
+  count(income_group) %>% 
+  gt()
 ```
 
 # Basic Sanitation & GDP
@@ -90,7 +101,9 @@ jmp_uga_sanitation <- jmp_wld_sanitation |>
 Below is a box- and jitterplot of countries with percentages of populations with access to basic sanitation in 2020 grouped by income classifications.
 
 ```{r}
-#| label: san-bas-u-income
+#| label: fig-san-bas-u-income
+#| fig-cap: figure
+#| output-location: slide
 #| fig-alt: |
 #|   A boxplot with jittered points overlaid. The x-axis represents income 
 #|   groups, while the y-axis represents the percentage of the population with 
@@ -111,10 +124,11 @@ ggplot(data = jmp_wld_sanitation_gdp_income,
 
 # Regions
 
-The table below shows urban sanitation indicators for global regions in 2020.
+@tbl-reg-sanitation shows urban sanitation indicators for global regions in 2020.
 
 ```{r}
-#| label: reg-sanitation
+#| label: tbl-reg-sanitation
+#| tbl-cap: Urban sanitation
 
 jmp_reg_sanitation |> 
   filter(year == max(year)) |> 
@@ -136,10 +150,10 @@ jmp_reg_sanitation |>
 
 # Uganda
 
-The figure below shows the sanitation ladder for Uganda.
+\@fig-san-uga shows the sanitation ladder for Uganda.
 
 ```{r}
-#| label: san-uga
+#| label: fig-san-uga
 #| fig-cap: Sanitation indicators for Uganda on a national level.
 
 ggplot(data = jmp_uga_sanitation, 
@@ -155,3 +169,7 @@ ggplot(data = jmp_uga_sanitation,
   theme(panel.grid.minor = element_blank()) 
 
 ```
+
+# Photo of a toilet
+
+![Toilet](img/26473744850_32578ea50b_w.jpg)
